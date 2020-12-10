@@ -172,7 +172,7 @@ public class SetOfStacks<T>
                current.getForward().setBack( current.getBack() );
             }
          }
-         
+         numberOfStacks--;
       }
       
       return output;
