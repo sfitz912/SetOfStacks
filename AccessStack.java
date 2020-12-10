@@ -1,5 +1,7 @@
 import ch02.stacks.ArrayBoundedStack;
-
+   /** 
+      The AccessStack allows us to keep track of its size and contains the popAt method
+   */
 public class AccessStack<T> extends ArrayBoundedStack<T>
 {
    public AccessStack()
@@ -12,9 +14,9 @@ public class AccessStack<T> extends ArrayBoundedStack<T>
       super(capacity);
    }
    
-   
    /**
       The popAt method removes and returns the element at the given index.  
+      Shifts all of the elements down in the array
       @param index The index of the item to pop.
       @return The element at the index
    */
@@ -23,6 +25,7 @@ public class AccessStack<T> extends ArrayBoundedStack<T>
       T toPop = elements[index];
       if (index < topIndex)
       {
+         // Find the proper index
          for (int i = index; i < topIndex; i++)
          {
             elements[i] = elements[i + 1];

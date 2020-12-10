@@ -28,7 +28,7 @@ public class SetOfStacks<T>
    public void push(T element)
    {
       // If the top is full, create a new stack, link it back to the existing top, link 
-      // the existing top to it, and make it the top.  
+      // the existing top to it, and make it the new top link.  
       if (top.getInfo().isFull() )
       {
          DLLNode<AccessStack<T>> newTop = new DLLNode<AccessStack<T>>(new AccessStack<T>(STACK_CAPACITY));
@@ -126,10 +126,12 @@ public class SetOfStacks<T>
    }
    
    /**
-      The popAt method removes and returns the element at the given index.  
+      Selects the AccessStack which contains the index being removed,
+      Then the popAt method removes and returns the element at the given index.  
       @param index The index of the item to pop.
       @return The element at the index
    */
+   
    public T popAt(int index)
    {
       int accumulator = 0;
@@ -141,11 +143,14 @@ public class SetOfStacks<T>
       while (accumulator <= index)
       {
          nextAccumulator = accumulator + current.getInfo().size();
+         // If the nextAccumulator is greater than the desired index
+         // it is contained within the AccessStack stored in the current node
          if (nextAccumulator > index)
          {
             output = current.getInfo().popAt( index - accumulator );
             break;
          }
+         // Otherwise we move through the list
          accumulator = nextAccumulator;
          current = current.getForward();
       }
@@ -159,16 +164,18 @@ public class SetOfStacks<T>
             // And it's not the only stack
             if (bottom != top)
             {
+               // Set the new bottom
                bottom = bottom.getForward();
                bottom.setBack( null );
             }
          }
          // For stacks other than the bottom
          else
-         {
+         {  
+            // Link the front of the next node to the previous
             current.getBack().setForward( current.getForward() );
             if (current != top)
-            {
+            {  // Link to the back of the node on top
                current.getForward().setBack( current.getBack() );
             }
          }
