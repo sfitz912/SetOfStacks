@@ -172,10 +172,13 @@ public class SetOfStacks<T>
          // For stacks other than the bottom
          else
          {  
-            // Link the front of the next node to the previous
+            // Setting the forward link of the previous node to back of the next node
+            // If it's the top node then next = null
             current.getBack().setForward( current.getForward() );
+            // If the current node is a middle node           
             if (current != top)
-            {  // Link to the back of the node on top
+            {   
+               // Sets the next node's back link to the previous node's forward link
                current.getForward().setBack( current.getBack() );
             }
          }
